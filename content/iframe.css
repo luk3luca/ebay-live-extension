@@ -2,129 +2,17 @@
    eBay Live Clean - rules inside the ShopLive player iframe
    (ir.ebaystatic.com/.../player.html)
    ============================================================
-   We rebuild the body layout with CSS grid:
-     column 1 = video (always visible, never cropped)
-     column 2 = chat (320px wide, scrolls independently)
+   v7: l'iframe non viene modificato. Solo l'header eBay
+   interno viene nascosto per dare piu' spazio al video.
+   Nessun grid, nessun flex, nessuna chat riposizionata.
    ============================================================ */
 
-/* --- reset html/body per usare tutta la viewport ---------- */
-
-html.eblc-on,
-html.eblc-on body {
+html.eblc-on div.ghw.ghw--loaded,
+html.eblc-on div#gh-gb {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
-  background: #000 !important;
-  overflow: hidden !important;
-}
-
-html.eblc-on,
-html.eblc-on body {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* --- body ShopLive: layout a 2 colonne -------------------- */
-
-html.eblc-on body._body_1vqxh_246 {
-  display: grid !important;
-  grid-template-columns: 1fr 320px !important;
-  grid-template-rows: 100vh !important;
-  grid-template-areas: "video chat" !important;
-  gap: 0 !important;
-  height: 100vh !important;
-  width: 100% !important;
-  max-width: none !important;
-  flex-direction: row !important;
-  align-items: stretch !important;
-  justify-items: stretch !important;
-}
-
-/* la root del player ShopLive prende tutta la colonna video */
-html.eblc-on body._body_1vqxh_246 > div._root_1vqxh_251 {
-  grid-area: video !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-/* l'iframe annidato che contiene lo stream video vero */
-html.eblc-on ._iframe_1vqxh_255,
-html.eblc-on iframe._iframe_1vqxh_255 {
-  grid-area: video !important;
-  width: 100% !important;
-  height: 100% !important;
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
   border: 0 !important;
-}
-
-/* il <video> nativo: sempre intero, mai tagliato */
-html.eblc-on video {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-  background: #000 !important;
-  display: block !important;
-}
-
-/* la chat si posiziona nella colonna 2 */
-html.eblc-on .chat-hUIkzk,
-html.eblc-on [class*="chat-"][class*="UIkzk"],
-html.eblc-on [class^="chat-"] {
-  grid-area: chat !important;
-  width: 320px !important;
-  min-width: 320px !important;
-  max-width: 320px !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
-  border-left: 1px solid #2a2a2a !important;
-  background: #1a1a1a !important;
-  overflow: hidden !important;
-  position: relative !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-/* il contenitore dei messaggi scrolla */
-html.eblc-on .chatFeedContainer-IZMaWZ,
-html.eblc-on [class*="chatFeedContainer-"] {
-  flex: 1 1 auto !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  height: auto !important;
-  min-height: 0 !important;
-}
-
-/* l'input della chat resta in fondo */
-html.eblc-on [class*="chatInput-"] {
-  flex: 0 0 auto !important;
-  position: relative !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
-  width: 100% !important;
-}
-
-/* --- nascondi il footer interno del player ----------------- */
-
-html.eblc-on div._footerWrapper_wzbnb_39,
-html.eblc-on div._footer_1vqxh_263,
-html.eblc-on [class*="_footerWrapper_"],
-html.eblc-on [class*="_footer_1vqxh_"] {
-  display: none !important;
-}
-
-/* --- il banner/header interno del player ------------------- */
-
-html.eblc-on div._header_1917q_21,
-html.eblc-on [class*="_header_1917q_"] {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  z-index: 10 !important;
-  pointer-events: auto !important;
 }
