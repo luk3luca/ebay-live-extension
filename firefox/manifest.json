@@ -1,0 +1,48 @@
+{
+  "manifest_version": 2,
+  "name": "eBay Live Clean",
+  "version": "1.0.0",
+  "description": "Massimizza il video di eBay Live e sposta la chat a lato. Niente crop, niente header invasivo.",
+
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.ebay.it/ebaylive/*",
+        "*://*.ebaystatic.com/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_start",
+      "css": [
+        "content/page.css",
+        "content/iframe.css"
+      ],
+      "js": [
+        "content/inject.js"
+      ]
+    }
+  ],
+
+  "browser_action": {
+    "default_title": "eBay Live Clean",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "48": "icons/icon-48.png"
+    }
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ebay-live-clean@luca.dev",
+      "strict_min_version": "109.0"
+    }
+  }
+}
