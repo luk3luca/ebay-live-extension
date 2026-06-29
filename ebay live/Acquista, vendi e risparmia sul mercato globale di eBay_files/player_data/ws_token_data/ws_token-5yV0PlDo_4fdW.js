@@ -1,0 +1,1 @@
+import{B as e}from"./ebay-page-notice-DnqMxjRF.js";import{B as t,O as n,t as r}from"./browser-B3jBOCQ7.js";import{n as i,t as a}from"./constants-DQz7Tqvw.js";var o=()=>{let{siteUrl:e,isProd:r}=t(),o=r?e:`*`;n(`message`,({data:e})=>{if(e.type===a.WS_REQUEST_TOKEN){let e=window[i];e&&window.parent.postMessage({type:a.WS_TOKEN,token:e},o)}})};r((0,e().jsx)(()=>(o(),null),{}));

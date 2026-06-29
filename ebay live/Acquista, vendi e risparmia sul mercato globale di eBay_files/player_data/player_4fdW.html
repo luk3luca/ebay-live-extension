@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it-IT" data-theme="KIWI"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,shrink-to-fit=no"><title>LIVE</title><style>body {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+      }</style><link href="player_data/bundle.c5c0921bf5a2a516572a_4fdW.css" rel="stylesheet"><script data-inlinepayload="{&quot;username&quot;:&quot;&quot;,&quot;guid&quot;:&quot;1505793819f0a35992d6c531ffe26798&quot;,&quot;rlogid&quot;:&quot;t6olpb%60jkjfwebewiiw%60hc%60jhs9%3Fjnu%60ehnhcu%60%60%60ulkrbmaehmq%2Bd%3Bc0ae1%3Fa.qctp4%3F0.wduuf-19f1505a621-0x2104&quot;,&quot;intervalMs&quot;:60000}">(() => {
+	let prevTotalVideoFrames = 0;
+	let prevDroppedVideoFrames = 0;
+	let reconnects = 0;
+	let totalTotalVideoFrames = 0;
+	let configMeta;
+	let totalDroppedVideoFrames = 0;
+	const startTime = Date.now();
+	const campaignKey = new URL(location.href).searchParams.get("ck") || "";
+	const inlinepayload = document.currentScript?.dataset.inlinepayload;
+	if (inlinepayload) try {
+		configMeta = JSON.parse(inlinepayload);
+	} catch {}
+	if (!configMeta || !configMeta.intervalMs) return;
+	const { username, guid, rlogid, intervalMs } = configMeta;
+	const sampleMetrics = () => {
+		const video = document.querySelector("video");
+		if (!video || document.hidden) return;
+		const { creationTime, totalVideoFrames, droppedVideoFrames } = video.getVideoPlaybackQuality();
+		if (totalVideoFrames < prevTotalVideoFrames) {
+			totalTotalVideoFrames += prevTotalVideoFrames;
+			totalDroppedVideoFrames += prevDroppedVideoFrames;
+			reconnects += 1;
+		}
+		prevTotalVideoFrames = totalVideoFrames;
+		prevDroppedVideoFrames = droppedVideoFrames;
+		const toLog = {
+			type: "videoquality",
+			username,
+			guid,
+			rlogid,
+			totalVideoFrames,
+			droppedVideoFrames,
+			reconnects,
+			startTime,
+			campaignKey,
+			isWebRTC: !!video.srcObject,
+			totalDroppedVideoFrames: totalDroppedVideoFrames + droppedVideoFrames,
+			totalTotalVideoFrames: totalTotalVideoFrames + totalVideoFrames,
+			metricTime: parseInt(creationTime.toFixed(0), 10),
+			paused: (video.paused ? 1 : 0) || -1,
+			readyState: video.readyState
+		};
+		window.parent.postMessage({
+			type: "RUM_LOG_EVENT",
+			payload: toLog
+		}, "*");
+	};
+	setInterval(sampleMetrics, intervalMs);
+})()</script></head><body><div id="root"><div style="background-image: url(https://image.us1.shoplive.cloud/keCtCjDZkG3DFqENKzCj/019febc5-406e-4341-b99e-8328b52811ab.png)" class="svelte-tiqzij VideoWrapper"><video class="web-video-player" id="video-keCtCjDZkG3DFqENKzCj541ae9b4d49e" src="blob:https://ir.ebaystatic.com/6f8f8f36-a4a4-4dd0-ac51-74c652c668d9" poster="images/alpha.png"><track default="" kind="captions">
+  영상은 모바일로 확인해주세요.</video> </div>  <div id="intro-lottie-player-wrapper" style="display: none;" class="svelte-1q01uu5"><div id="intro-lottie" style="" class="svelte-1q01uu5"></div></div> <div class="root-keCtCjDZkG3DFqENKzCj themed EBAY platform-web lang-it is-fullscreen campaign-onair screen-portrait migration-hide-header migration-hide-auction-winner-popup migration-hide-footer migration-hide-connection-alert" aria-label="[RIP&amp;SHIP 29/06] BOX BREAK  + SINGOLE DA 1€">   <div class="themed-player-wrapper replay-theme-excluded on-displaying-now-goods"><div class="wrap-themed-ui" style="">  <div class="wrap-bottom-back-gradient use-slider"><div class="animate__animated "><div id="bottom-back-gradient" style=""></div></div></div>   <div id="reconnect-badge" class=""></div>  <div id="top-frame"><div id="top-header" style=""><div class="frame-row top-header-frame-row"><div class="animate__animated "><div class="wrap-head-option-left"><div class="wrap-back-logo"> <div class="count-wrapper"><div class="education-tooltip-container user-count"><div class="education-tooltip-target"><div id="user-count" class="user-count" role="img" aria-label="172 Viewers"><span class="count-icon"></span> <span class="count" aria-hidden="true">172</span></div></div> </div></div></div> <div id="sound-button"><button aria-label="Unmute" class="unmute accessibility-ui"> </button></div></div> <div class="wrap-head-option-right"><div id="seller-button"><div class="single-button"><div class="single-seller"><button aria-hidden="false" aria-label="Salva venditore" class="save-seller accessibility-ui"><div class="heart-icon"></div> <div>Salva venditore</div></button></div> <div class="absolute-wrapper"><div class="seller-profile"><button role="link" aria-label="Seller sportycardsit" class="accessibility-ui" style="background-image: url(https://image.us1.shoplive.cloud/keCtCjDZkG3DFqENKzCj/71bd6e85-919b-4369-af9a-89822daa3079.png);"></button></div></div></div></div> <div class="wrap-head-action-status use-slider">  <div class="flash-deal-badge-wrapper svelte-cllr8"> <button id="line-up-button" aria-label="Item lineup" class="accessibility-ui"></button></div>  <button id="goods-list-show-btn" aria-label="Item Line-up"></button> <button id="menu-button" class="button-image-square" style=""></button>   </div>  </div></div> </div></div></div> <div class="wrap-bottom-frame use-slider"><div id="bottom-frame">  <div id="safe-area-bottom-space" class="svelte-138kwhp"></div></div></div> <div class="animate__animated ">  </div>       </div>    <div><div class="education-tooltip-overlay hidden" style="--education-tooltip-mask-width: 240; --education-tooltip-pointer-position: 0; left: 0px; top: 16px; --education-tooltip-mask-height: 0;"><div class="education-tooltip-ui disable-ui-hide-on-touch slide-to-bid"><div class="education-tooltip-pointer left"></div> <div class="education-tooltip-mask"><div class="education-tooltip-message"><p class="education-tooltip-title">Watching Now</p> <p class="education-tooltip-content">The number of people currently watching this live stream</p></div> <button class="education-tooltip-close-button"></button></div></div></div></div></div></div>   <img class="spinner" src="player_data/spinner_4fdW.svg" alt="">    </div><script src="player_data/275.db94711a8c74c9790ce1_4fdW.js"></script><script src="player_data/bundle.3c33a1350ff509a7465e_4fdW.js"></script><script id="emi" type="text/javascript">
+"use strict";(()=>{var l=e=>({ok:!0,data:e}),i=e=>({ok:!1,data:e}),u=[/https:\/\/(www\.)?(www|qa|latest)\.ebay\.(com|at|de|fr|ca|sg|ch|es|ie|nl|cn|jp|it|com.au|com.hk|com.sg|com.my|co\.uk)/,/https:\/\/.*\.ebay\.com:8443/],d=e=>u.some(t=>t.test(e));function a(e,t="*"){window.parent.postMessage(e,t)}function E(e){if(!e.data||typeof e.data!="object")return;let t=e.data,{type:r,id:n,selector:c,content:o,attributes:m}=t;if(r==="ebaylive-inject-html"&&c&&o)if(d(e.origin)){let s=g(c,o),p={type:"ebaylive-inject-html-receipt",...n&&{id:n},result:s};a(p,e.origin)}else{let s={type:"ebaylive-inject-html-receipt",...n&&{id:n},result:i({type:"UNSUPPORTED_ORIGIN",message:e.origin,selector:""})};a(s)}}function g(e,t){try{if(!t||t.trim()==="")return i({type:"INVALID_CONTENT",message:"content cannot be empty",selector:e});let r=document.querySelector(e);if(!r)return i({type:"ELEMENT_NOT_FOUND",message:`Target element not found for selector: ${e}`,selector:e});try{let n=document.createRange().createContextualFragment(t);r.appendChild(n)}catch(n){return i({type:"INJECTION_FAILED",message:`Failed to append HTML to target element: ${n instanceof Error?n.message:"Unknown error"}`,selector:e})}return l(null)}catch(r){return i({type:"INJECTION_FAILED",message:`Unexpected error during script injection: ${r instanceof Error?r.message:"Unknown error"}`,selector:e})}}window.addEventListener("message",E);window.eBayMessaging={injectHTML:g};})();
+
+</script><div id="audd-recorder-marker" style="display: none;"></div></body></html>

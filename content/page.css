@@ -1,0 +1,119 @@
+/* ============================================================
+   eBay Live Clean - rules for the outer eBay page
+   (ebay.it/ebaylive/events/*/stream)
+   ============================================================
+   These rules are scoped to "html.eblc-on" so turning the
+   extension off restores the page completely untouched.
+   ============================================================ */
+
+html.eblc-on,
+html.eblc-on body {
+  height: 100% !important;
+  min-height: 100% !important;
+}
+
+html.eblc-on body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #000 !important;
+}
+
+/* --- nascondi header eBay + header live + footer ---------- */
+
+html.eblc-on #gh,
+html.eblc-on header#gh,
+html.eblc-on header.gh-header,
+html.eblc-on div.ghw,
+html.eblc-on header._root_8dbp8_39,
+html.eblc-on #glbfooter,
+html.eblc-on footer,
+html.eblc-on div[id^="gh-"],
+html.eblc-on div.gh-banner {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+/* --- main content: zero padding, full height -------------- */
+
+html.eblc-on #mainContent {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  outline: none !important;
+  display: block !important;
+}
+
+/* --- container full-height eBay: forza viewport ----------- */
+
+html.eblc-on div._fullHeightContainer_ynlgm_277 {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* --- la riga del player: tutta la viewport ---------------- */
+
+html.eblc-on div.page-grid-container._playerRow_ynlgm_298 {
+  width: 100% !important;
+  max-width: none !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+/* la grid interna del player row non limiti l'altezza */
+html.eblc-on div.page-grid._grid_ynlgm_302 {
+  height: 100vh !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+  display: block !important;
+}
+
+/* --- il wrapper del player: niente vincoli --------------- */
+
+html.eblc-on div._root_1cn3q_39._shoplive_ynlgm_323 {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+/* --- l'iframe del player: sempre pieno schermo ----------- */
+
+html.eblc-on iframe[src*="player.html"] {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  z-index: 1 !important;
+}
+
+/* --- la sezione eventi sotto il player viene nascosta ---- */
+/* (non serve durante la visione; si ripristina spegnendo) */
+
+html.eblc-on div.page-grid-container._eventsContainer_ynlgm_282,
+html.eblc-on div._aboutSection_ynlgm_305,
+html.eblc-on div._qrSection_ynlgm_306 {
+  display: none !important;
+}
