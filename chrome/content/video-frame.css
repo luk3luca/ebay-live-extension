@@ -1,0 +1,20 @@
+/* ============================================================
+   eBay Live Clean - player video (ir.ebaystatic.com/.../player.html)
+   ------------------------------------------------------------
+   Il video e' verticale (720x1280). Lo slot esterno e' gia'
+   dimensionato 9:16 dal CSS della pagina: qui basta far
+   riempire lo slot al video, senza crop.
+   ============================================================ */
+
+html.eblc-on .VideoWrapper,
+html.eblc-on .themed-player-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+html.eblc-on video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important; /* niente crop */
+  background: #000 !important;
+}
