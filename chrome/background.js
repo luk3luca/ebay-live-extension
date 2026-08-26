@@ -1,6 +1,6 @@
 /* ============================================================
    eBay Live Clean - service worker (MV3)
-   Mantiene il badge dell'icona sincronizzato con lo stato.
+   Keeps the toolbar badge in sync with the enabled state.
    ============================================================ */
 
 function updateBadge() {

@@ -1,23 +1,23 @@
 /* ============================================================
-   eBay Live Clean - pagina esterna (ebay.it/ebaylive/events/*)
+   eBay Live Clean - outer page (ebay.it/ebaylive/events/*)
    ------------------------------------------------------------
    Layout:
-     - header evento e header eBay nascosti (guadagnano spazio)
-     - riga del player a tutta viewport: info negozio (span 5,
-       come da griglia originale) | video | sidebar
-     - QR code nascosto: il suo spazio va al video + sidebar
-     - la sezione "Altri eventi" sotto resta al suo posto e la
-       pagina scorre normalmente per raggiungerla
-   Selettori sui PREFISSI di classe (es. [class*="_playerRow_"]),
-   mai sugli hash che eBay cambia a ogni deploy.
+     - event header and eBay header hidden (frees vertical space)
+     - player row spans the viewport: seller info (span 5, as in
+       the original grid) | video | sidebar
+     - QR panel hidden: its columns go to video + sidebar
+     - the "More events" section below stays in place and the
+       page scrolls normally to reach it
+   Selectors target stable class PREFIXES (e.g. [class*="_playerRow_"]),
+   never the build hashes eBay changes on every deploy.
    ============================================================ */
 
-/* la pagina deve scorrere: gli eventi stanno sotto il player */
+/* the page must scroll: event listings live below the player */
 html.eblc-on body {
   overflow-x: hidden !important;
 }
 
-/* --- nascosti: header globale, header evento, banner, QR, footer --- */
+/* --- hidden: global header, event header, banners, QR, footer --- */
 
 html.eblc-on #gh,
 html.eblc-on .ghw,
@@ -30,7 +30,7 @@ html.eblc-on [class*="_qrSection_"] {
   display: none !important;
 }
 
-/* --- contenitore full-height: flusso normale, senza fix --- */
+/* --- full-height container: normal flow, no fixed positioning --- */
 
 html.eblc-on [class*="_fullHeightContainer_"] {
   position: relative !important;
@@ -46,22 +46,22 @@ html.eblc-on [class*="_fullHeightContainer_"] {
   overflow: visible !important;
 }
 
-/* --- riga del player: altezza viewport, MA stesse larghezze dell'
-   originale (la griglia e il suo max-width restano quelli di eBay,
-   altrimenti le colonne 1fr si ingrossano e l'info negozio si allarga) --- */
+/* --- player row: viewport height, but SAME widths as the original
+   (the grid and its max-width stay untouched, otherwise the 1fr
+   columns stretch and the seller info column gets wider) --- */
 
 html.eblc-on [class*="_playerRow_"] {
   height: 100vh !important;
   min-height: 0 !important;
 }
 
-/* info negozio: lasciamo le regole originali di eBay (span 5 della
-   griglia): nessuna regola qui. */
+/* seller info: keep eBay's original rules (span 5 of the grid):
+   no rule here on purpose. */
 
-/* --- slot del video: si estende sulle colonne lasciate libere dal QR
-   nascosto (da colonna 6 alla fine della griglia, bordo destro come
-   prima). Larghezza interna = video 9:16 + sidebar (dentro l'iframe);
-   se lo spazio e' minore si adatta (max-width:100%). --- */
+/* --- video slot: extends over the columns freed by the hidden QR
+   (from column 6 to the end of the grid, right edge as before).
+   Inner width = 9:16 video + sidebar (living inside the iframe);
+   shrinks via max-width:100% when space is tighter. --- */
 
 html.eblc-on [class*="_shoplive_"],
 html.eblc-on #stream-parent {
