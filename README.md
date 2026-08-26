@@ -22,34 +22,52 @@ firefox/   Firefox MV2 build (Firefox 121+)
 
 ## Install
 
-### Chrome / Edge / Brave (from source)
-
-1. Download and unpack the repo (or `git clone`)
-2. Open `chrome://extensions`
-3. Enable **Developer mode** (top right)
-4. **Load unpacked** → select the `chrome/` folder
-5. Open a live event: <https://www.ebay.it/ebaylive/>
-
-### Firefox (temporary add-on)
-
-1. Open `about:debugging#/runtime/this-firefox`
-2. **Load Temporary Add-on…** → pick `firefox/manifest.json`
-3. Open a live event
-
-> Temporary add-ons are removed when Firefox restarts. For a permanent
-> install the extension must be signed on [addons.mozilla.org](https://addons.mozilla.org)
-> (see [Releases](#releases) — the `.xpi` there is signed for self-distribution
-> only if you build and submit it yourself).
-
-### From Releases (easier)
+### From Releases (recommended)
 
 Prebuilt packages are attached to each
 [GitHub release](../../releases):
 
-- `ebay-live-clean-chrome-<version>.zip` → unpack, then follow the
-  "Load unpacked" steps above on the unpacked folder
-- `ebay-live-clean-firefox-<version>.xpi` → drag & drop onto
-  `about:debugging#/runtime/this-firefox` (temporary install)
+- `ebay-live-clean-chrome-<version>.zip` — Chrome / Edge / Brave
+- `ebay-live-clean-firefox-<version>.xpi` — Firefox
+
+#### Chrome / Edge / Brave
+
+1. Download the zip and unpack it
+2. Open `chrome://extensions`
+3. Enable **Developer mode** (top right)
+4. Click **Load unpacked** and select the unpacked folder
+5. Open a live event: <https://www.ebay.it/ebaylive/>
+
+The extension stays installed across browser restarts.
+
+#### Firefox — install from file
+
+1. Download the `.xpi` from the [latest release](../../releases/latest)
+2. Open `about:addons` → **Extensions**
+3. Open the **Tools for All Add-ons** menu (gear icon) →
+   **Install Add-on From File…** → pick the downloaded `.xpi`
+4. Open a live event: <https://www.ebay.it/ebaylive/>
+
+> **Note:** Firefox requires extensions to be cryptographically signed.
+> "Install Add-on From File" with an unsigned `.xpi` works on
+> **Firefox Developer Edition, Nightly and ESR** out of the box
+> (ESR: set `xpinstall.signatures.required` to `false` in `about:config`).
+> On standard Firefox release builds, unsigned `.xpi` files can only be
+> loaded as **temporary add-ons** (`about:debugging#/runtime/this-firefox`
+> → *Load Temporary Add-on…*) and are removed when the browser restarts.
+> Permanent installs on any Firefox require signing the package on
+> [addons.mozilla.org](https://addons.mozilla.org/developers/addon/submit/) —
+> free and automated.
+
+### From source
+
+```sh
+git clone https://github.com/luk3luca/ebay-live-extension.git
+```
+
+Then follow the steps above, selecting `chrome/` (Chrome) or pointing
+Firefox at `firefox/manifest.json` instead of the downloaded package.
+
 
 ## How it works
 
