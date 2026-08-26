@@ -1,8 +1,8 @@
 /* ============================================================
    eBay Live Clean - popup script (Chrome MV3)
-   - legge/scrive chrome.storage.local: eblc_enabled, eblc_width
-   - le modifiche si propagano da sole a tutti i frame aperti
-     (i content script ascoltano storage.onChanged)
+   - reads/writes chrome.storage.local: eblc_enabled, eblc_width
+   - changes propagate by themselves to every open frame
+     (content scripts listen to storage.onChanged)
    ============================================================ */
 
 (function () {

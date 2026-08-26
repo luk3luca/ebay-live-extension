@@ -1,9 +1,9 @@
 /* ============================================================
-   eBay Live Clean - player video (ir.ebaystatic.com/.../player.html)
+   eBay Live Clean - video player (ir.ebaystatic.com/.../player.html)
    ------------------------------------------------------------
-   Il video e' verticale (720x1280). Lo slot esterno e' gia'
-   dimensionato 9:16 dal CSS della pagina: qui basta far
-   riempire lo slot al video, senza crop.
+   The video is vertical (720x1280). The outer slot is already
+   sized 9:16 by the page CSS: making the video fill the slot,
+   uncropped, is all that's needed here.
    ============================================================ */
 
 html.eblc-on .VideoWrapper,
@@ -15,21 +15,21 @@ html.eblc-on .themed-player-wrapper {
 html.eblc-on video {
   width: 100% !important;
   height: 100% !important;
-  object-fit: contain !important; /* niente crop */
+  object-fit: contain !important; /* never crop */
   background: #000 !important;
 }
 
-/* gradiente scuro in basso sulla live: ereditato dal layout originale
-   (rendeva leggibile la chat sovrapposta) - qui non serve */
+/* dark gradient at the bottom of the stream: inherited from the
+   original layout (it made the overlaid chat readable) - not needed */
 html.eblc-on #bottom-back-gradient,
 html.eblc-on .wrap-bottom-back-gradient,
 html.eblc-on [class*="wrap-bottom-back-gradient"] {
   display: none !important;
 }
 
-/* overlay UI del video (controlli, slider, popup oggetti): ancorati
-   al solo video, non a video+sidebar, altrimenti si centrano sotto
-   la colonna chat */
+/* video overlay UI (controls, sliders, item popups): anchored to
+   the video only, not video+sidebar, otherwise they get centered
+   under the chat column */
 html.eblc-on [class*="wrap-themed-ui"] {
   position: absolute !important;
   top: 0 !important;

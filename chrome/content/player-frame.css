@@ -1,17 +1,17 @@
 /* ============================================================
-   eBay Live Clean - wrapper player (ebay.it/.../player.html)
+   eBay Live Clean - player wrapper (ebay.it/.../player.html)
    ------------------------------------------------------------
-   Questo iframe ospita: overlay UI (mute, contatore, bottoni),
-   footer con CHAT + input + CARD oggetto/aste.
+   This iframe hosts: UI overlay (mute, viewer count, buttons)
+   and the footer with CHAT + input + item/auction CARD.
    Layout:
-     - colonna destra fissa (--eblc-sidebar): card in alto,
-       poi chat che riempie il resto
-     - tutto il resto trasparente sopra il video
+     - fixed right column (--eblc-sidebar): item card on top,
+       then chat filling the remaining space
+     - everything else stays transparent above the video
    ============================================================ */
 
 /* --- root del player: diventa una riga video + sidebar --- */
 
-/* default della larghezza colonna (sovrascritta da inject.js via storage) */
+/* default column width (overridden by inject.js via storage) */
 html.eblc-on {
   --eblc-sidebar: 360px;
 }
@@ -25,10 +25,10 @@ html.eblc-on [class*="_root_1amtf_"] {
   padding: 0 !important;
 }
 
-/* iframe video + overlay: occupano solo lo spazio a sinistra della
-   sidebar. L'iframe e' un replaced element e una regola piu' tarda di
-   eBay gli forza width:100%: lo vincolo con max-width, che eBay non
-   tocca. */
+/* video iframe + overlay: they only occupy the space left of the
+   sidebar. The iframe is a replaced element and a later eBay rule
+   forces width:100% on it: constrained via max-width, which eBay
+   never sets. */
 html.eblc-on [class*="_iframe_1amtf_"],
 html.eblc-on [class*="_transparentOverlay_1amtf_"] {
   position: absolute !important;
@@ -50,8 +50,8 @@ html.eblc-on [class*="_transparentOverlay_1amtf_"] {
   z-index: 2 !important; /* resta sopra l'iframe per i click/mute */
 }
 
-/* --- footer (chat + card oggetti): diventa la sidebar ---
-     Solo il wrapper e' fixed; il figlio _playerFooter_ lo riempie. */
+/* --- footer (chat + item card): becomes the sidebar ---
+     Only the wrapper is fixed; the _playerFooter_ child fills it. */
 
 html.eblc-on [class*="_footerWrapper_"] {
   position: fixed !important;
@@ -86,8 +86,8 @@ html.eblc-on [class*="_playerFooter_"] {
   background: transparent !important;
 }
 
-/* gradienti ereditati dal layout originale (chat sovrapposta al video):
-   fondale scuro della sidebar e ombre del player */
+/* gradients inherited from the original layout (chat overlaid on the
+   video): sidebar dark backdrop and player shadows */
 html.eblc-on [class*="_playerFooter_"]::before,
 html.eblc-on [class*="_playerFooter_"]::after,
 html.eblc-on #bottom-back-gradient,
@@ -97,9 +97,9 @@ html.eblc-on .wrap-bottom-back-gradient {
   background: none !important;
 }
 
-/* header del player (mute a sinistra, contatore/bottoni a destra):
-   il gancio destro deve fermarsi dove finisce il video, altrimenti i
-   bottoni finiscono sotto la colonna chat */
+/* player header (mute on the left, viewer count/buttons on the right):
+   its right anchor must stop where the video ends, otherwise the
+   buttons end up under the chat column */
 html.eblc-on [class*="_root_1amtf_"] > header[class*="_streamHeader_"] {
   right: calc(var(--eblc-sidebar, 360px) + 16px) !important;
   left: 16px !important;
@@ -113,7 +113,7 @@ html.eblc-on [class*="_playerFooter_"] > * {
   margin: 0 !important;
 }
 
-/* --- card oggetto / asta: in cima alla sidebar --- */
+/* --- item / auction card: top of the sidebar --- */
 
 html.eblc-on [class*="_itemCard_1p0fr_"] {
   order: 0 !important;
@@ -124,13 +124,13 @@ html.eblc-on [class*="_itemCard_1p0fr_"] [class*="_details_1p0fr_"] {
   padding: 12px !important;
 }
 
-/* --- marquee notice: nascosto (spam di testo scorrevole) --- */
+/* --- marquee notice: hidden (scrolling text spam) --- */
 
 html.eblc-on [class*="_notice_2jqe0_"] {
   display: none !important;
 }
 
-/* --- chat: riempie lo spazio residuo della sidebar --- */
+/* --- chat: fills the remaining sidebar space --- */
 
 html.eblc-on section[class^="chat-"],
 html.eblc-on section[class*=" _chat_"] {
@@ -146,10 +146,10 @@ html.eblc-on section[class*=" _chat_"] {
   flex-direction: column !important;
 }
 
-/* contenitore intermedio della chat (struttura, non hash):
+/* intermediate chat container (structure, not hash):
      _playerFooter_ > div > section.chat
-   deve poter crescere e restringersi, altrimenti la chat
-   sfora la sidebar invece di scrollare */
+   it must be allowed to grow and shrink, otherwise the chat
+   overflows the sidebar instead of scrolling */
 html.eblc-on [class*="_playerFooter_"] > div:has(> section[class^="chat-"]) {
   display: flex !important;
   flex-direction: column !important;
@@ -160,7 +160,7 @@ html.eblc-on [class*="_playerFooter_"] > div:has(> section[class^="chat-"]) {
   order: 10 !important;
 }
 
-/* feed messaggi: scroll verticale, occupa lo spazio libero */
+/* message feed: vertical scroll, takes the free space */
 html.eblc-on [class*="_messageList_"],
 html.eblc-on [class*="chatFeedContainer-"] {
   flex: 1 1 auto !important;
@@ -176,7 +176,7 @@ html.eblc-on ul[class*="chatFeed-"] {
   max-width: 100% !important;
   height: 100% !important;
   scrollbar-width: thin !important;
-  padding: 8px 14px 8px 10px !important; /* padding destro maggiore: spazio per la scrollbar */
+  padding: 8px 14px 8px 10px !important; /* extra right padding: room for the scrollbar */
 }
 
 html.eblc-on li[class*="chatMessage-"],
@@ -190,7 +190,7 @@ html.eblc-on li[class*="chatMessage-"] [class*="chatText-"] {
   word-break: break-word !important;
 }
 
-/* --- input chat: fisso in fondo alla sidebar --- */
+/* --- chat input: pinned to the bottom of the sidebar --- */
 
 html.eblc-on [class*="chatInput-"],
 html.eblc-on [class*="_chatInput_"] {

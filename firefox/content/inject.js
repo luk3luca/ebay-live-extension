@@ -1,12 +1,12 @@
 /* ============================================================
    eBay Live Clean - content script
    ------------------------------------------------------------
-   Solo gestione stato: aggiunge/toglie "eblc-on" su <html>
-   del proprio frame (pagina, wrapper player, video player)
-   e imposta la variabile --eblc-sidebar (larghezza colonna).
-   Nessuna manipolazione del DOM: il layout e' tutto in CSS,
-   con selettori sui PREFISSI di classe (stabili tra i redeploy),
-   mai sugli hash.
+   State handling only: toggles the "eblc-on" class on <html>
+   of its own frame (outer page, player wrapper, video player)
+   and sets the --eblc-sidebar custom property (column width).
+   No DOM manipulation at all: the whole layout is plain CSS,
+   targeting stable class PREFIXES only (survive eBay redeploys),
+   never the build hashes.
    ============================================================ */
 
 (function () {
@@ -91,8 +91,8 @@
     }
   } catch (_) {}
 
-  // applicazione iniziale + ri-applicazione dopo SPA re-render:
-  // basta rimettere la classe su <html>, il CSS fa il resto.
+  // initial apply + re-apply after SPA re-renders:
+  // re-adding the class on <html> is enough, CSS does the rest.
   function boot() {
     readStateAndApply();
     try {
@@ -103,7 +103,7 @@
         requestAnimationFrame(function () {
           scheduled = false;
           if (!document.documentElement.classList.contains(CLASS_ON)) {
-            // eBay puo' ripulire le classi di <html>: se manca, la rimettiamo
+            // eBay may wipe the <html> classes: re-add when missing
             readStateAndApply();
           }
         });
