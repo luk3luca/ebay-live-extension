@@ -171,13 +171,23 @@ html.eblc-on [class*="chatFeedContainer-"] {
 }
 
 html.eblc-on ul[class*="chatFeed-"] {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
   height: 100% !important;
   scrollbar-width: thin !important;
-  padding: 8px 10px !important;
+  padding: 8px 14px 8px 10px !important; /* padding destro maggiore: spazio per la scrollbar */
 }
 
-html.eblc-on li[class*="chatMessage-"] {
-  width: 100% !important;
+html.eblc-on li[class*="chatMessage-"],
+html.eblc-on li[class*="chatMessage-"] > * {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
+
+html.eblc-on li[class*="chatMessage-"] [class*="chatText-"] {
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
 }
 
 /* --- input chat: fisso in fondo alla sidebar --- */
