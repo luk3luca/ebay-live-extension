@@ -25,19 +25,18 @@ html.eblc-on [class*="_root_1amtf_"] {
   padding: 0 !important;
 }
 
-/* video iframe + overlay: they only occupy the space left of the
-   sidebar. The iframe is a replaced element and a later eBay rule
-   forces width:100% on it: constrained via max-width, which eBay
-   never sets. */
+/* video iframe + overlay: capped at a FIXED 9:16 width via max-width
+   (eBay forces width:100% on the iframe but never sets max-width).
+   When the frame is too narrow the hard floor keeps >=140px for the
+   sidebar. The video NEVER grows with the sidebar. */
 html.eblc-on [class*="_iframe_1amtf_"],
 html.eblc-on [class*="_transparentOverlay_1amtf_"] {
   position: absolute !important;
   top: 0 !important;
   bottom: 0 !important;
   left: 0 !important;
-  right: var(--eblc-sidebar, 360px) !important;
-  width: calc(100% - var(--eblc-sidebar, 360px)) !important;
-  max-width: calc(100% - var(--eblc-sidebar, 360px)) !important;
+  right: auto !important;
+  max-width: min(calc(100vh * 9 / 16), calc(100% - 140px)) !important;
   height: 100% !important;
   max-height: none !important;
   flex: none !important;
@@ -59,9 +58,10 @@ html.eblc-on [class*="_footerWrapper_"] {
   bottom: auto !important;
   left: auto !important;
   right: 0 !important;
-  width: var(--eblc-sidebar, 360px) !important;
-  min-width: var(--eblc-sidebar, 360px) !important;
-  max-width: var(--eblc-sidebar, 360px) !important;
+  width: min(
+    480px,
+    clamp(140px, var(--eblc-sidebar, 360px), calc(100% - 100vh * 9 / 16))
+  ) !important;
   height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;

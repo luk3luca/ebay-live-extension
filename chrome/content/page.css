@@ -55,25 +55,33 @@ html.eblc-on [class*="_playerRow_"] {
   min-height: 0 !important;
 }
 
+/* the absolute video slot must anchor to the viewport: neutralize any
+   positioned ancestor between the full-height container and the slot */
+html.eblc-on [class*="_playerRow_"],
+html.eblc-on [class*="_playerRow_"] > .page-grid {
+  position: static !important;
+}
+
 /* seller info: keep eBay's original rules (span 5 of the grid):
    no rule here on purpose. */
 
-/* --- video slot: extends over the columns freed by the hidden QR
-   (from column 6 to the end of the grid, right edge as before).
-   Inner width = 9:16 video + sidebar (living inside the iframe);
-   shrinks via max-width:100% when space is tighter. --- */
+/* --- video slot: right-anchored to the VIEWPORT (not the eBay grid),
+   so it can extend into the empty page margin on wide screens.
+   Width = 9:16 video + requested sidebar, capped at the right edge
+   of the seller info section so it never covers it.
+   Inside, the video keeps a FIXED width: when space runs out the
+   sidebar shrinks, never the video. --- */
 
 html.eblc-on [class*="_shoplive_"],
 html.eblc-on #stream-parent {
-  grid-column: 6 / -1 !important;
-  justify-self: end !important;
-  position: relative !important;
-  inset: auto !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
   height: 100vh !important;
-  width: calc(100vh * 9 / 16 + var(--eblc-sidebar, 360px)) !important;
-  min-height: 0 !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
+  width: min(
+    calc(100vh * 9 / 16 + var(--eblc-sidebar, 360px)),
+    calc(50vw + 249px)
+  ) !important;
   margin: 0 !important;
   padding: 0 !important;
   background: #000 !important;
