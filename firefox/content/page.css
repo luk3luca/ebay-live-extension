@@ -1,84 +1,109 @@
 /* ============================================================
-   eBay Live Clean - rules for the outer eBay page
-   (ebay.it/ebaylive/events/*/stream)
-   ============================================================
-   Strategia attuale:
-     1. la rimozione dell'header e' fatta via DOM in inject.js
-        (nukeHeaders + MutationObserver). Qui nel CSS non
-        tocchiamo gli header.
-     2. il video viene massimizzato nella sua colonna con
-        regole CSS.
-   Tutto il resto (about, QR, eventi, footer) resta intatto.
+   eBay Live Clean - pagina esterna (ebay.it/ebaylive/events/*)
+   ------------------------------------------------------------
+   Layout:
+     - header evento e header eBay nascosti (guadagnano spazio)
+     - riga del player a tutta viewport: info negozio (span 5,
+       come da griglia originale) | video | sidebar
+     - QR code nascosto: il suo spazio va al video + sidebar
+     - la sezione "Altri eventi" sotto resta al suo posto e la
+       pagina scorre normalmente per raggiungerla
+   Selettori sui PREFISSI di classe (es. [class*="_playerRow_"]),
+   mai sugli hash che eBay cambia a ogni deploy.
    ============================================================ */
 
-/* --- massimizza il player row (altezza viewport) ----------- */
+/* la pagina deve scorrere: gli eventi stanno sotto il player */
+html.eblc-on body {
+  overflow-x: hidden !important;
+}
 
-html.eblc-on div._fullHeightContainer_ynlgm_277 {
-  min-height: 100vh !important;
-  height: auto !important;
+/* --- nascosti: header globale, header evento, banner, QR, footer --- */
+
+html.eblc-on #gh,
+html.eblc-on .ghw,
+html.eblc-on #gh-gb,
+html.eblc-on #widgets-placeholder,
+html.eblc-on #glbfooter,
+html.eblc-on [class*="_fullHeightContainer_"] > header[class*="_root_"],
+html.eblc-on [class*="_header_"][class*="page-grid"],
+html.eblc-on [class*="_qrSection_"] {
+  display: none !important;
+}
+
+/* --- contenitore full-height: flusso normale, senza fix --- */
+
+html.eblc-on [class*="_fullHeightContainer_"] {
+  position: relative !important;
+  inset: auto !important;
+  z-index: auto !important;
   width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #000 !important;
+  overflow: visible !important;
+}
+
+/* --- riga del player: tutta la viewport, gli eventi stanno sotto --- */
+
+html.eblc-on [class*="_playerRow_"] {
+  width: 100% !important;
+  height: 100vh !important;
+  min-height: 0 !important;
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-html.eblc-on div.page-grid-container._playerRow_ynlgm_298 {
-  min-height: 100vh !important;
-  height: auto !important;
+html.eblc-on [class*="_playerRow_"] > .page-grid,
+html.eblc-on [class*="_grid_1"] {
   width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
   max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-html.eblc-on div.page-grid._grid_ynlgm_302 {
-  min-height: 100vh !important;
-  width: 100% !important;
-  max-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   align-items: stretch !important;
 }
 
-/* --- wrapper ShopLive: riempie la sua colonna -------------- */
+/* info negozio: lasciamo le regole originali di eBay (span 5 della
+   griglia): nessuna regola qui. */
 
-html.eblc-on div._root_1cn3q_39._shoplive_ynlgm_323 {
+/* --- slot del video: assorbe le colonne del QR (6 -> fine griglia).
+   Larghezza = video 9:16 + sidebar (che vive DENTRO l'iframe). --- */
+
+html.eblc-on [class*="_shoplive_"],
+html.eblc-on #stream-parent {
+  grid-column: 6 / -1 !important;
+  justify-self: end !important;
   position: relative !important;
   inset: auto !important;
-  width: auto !important; /* let it align with the grid */
-  height: 100% !important;
-  min-height: 100vh !important;
+  height: 100vh !important;
+  width: calc(100vh * 9 / 16 + var(--eblc-sidebar, 360px)) !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
-  max-width: none !important;
   background: #000 !important;
-  grid-column-end: -1 !important; /* expand to fill space of hidden QR section on the right */
+  overflow: hidden !important;
 }
 
-/* --- iframe: riempie il wrapper ---------------------------- */
+html.eblc-on [class*="_stream_1"] {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
+/* iframe del player: riempie lo slot */
 html.eblc-on iframe[src*="player.html"] {
-  position: absolute !important;
-  inset: 0 !important;
+  display: block !important;
   width: 100% !important;
   height: 100% !important;
   border: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
-  display: block !important;
-}
-
-/* --- video: mai croppato ----------------------------------- */
-
-html.eblc-on video {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-  background: #000 !important;
-  display: block !important;
-}
-
-/* --- Nascondi solo la sezione QR sulla pagina esterna --- */
-html.eblc-on div[class*="_qrSection_"] {
-  display: none !important;
 }

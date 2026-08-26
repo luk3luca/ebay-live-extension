@@ -1,119 +1,67 @@
 /* ============================================================
-   eBay Live Clean - popup script
-   - reads/writes browser.storage.local.eblc_enabled
-   - sends EBLC_TOGGLE message to all frames in the active tab
+   eBay Live Clean - popup script (Chrome MV3)
+   - legge/scrive chrome.storage.local: eblc_enabled, eblc_width
+   - le modifiche si propagano da sole a tutti i frame aperti
+     (i content script ascoltano storage.onChanged)
    ============================================================ */
 
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "eblc_enabled";
+  var KEY_ENABLED = "eblc_enabled";
+  var KEY_WIDTH = "eblc_width";
 
-  function api() {
-    return typeof browser !== "undefined" ? browser : chrome;
+  function get(keys) {
+    return new Promise(function (resolve) {
+      try {
+        var p = chrome.storage.local.get(keys);
+        if (p && typeof p.then === "function") p.then(resolve, function () { resolve({}); });
+        else chrome.storage.local.get(keys, resolve);
+      } catch (_) { resolve({}); }
+    });
   }
 
-  function storage() {
-    const a = api();
-    return a && a.storage && a.storage.local ? a.storage.local : null;
-  }
-
-  function tabs() {
-    const a = api();
-    return a && a.tabs ? a.tabs : null;
-  }
-
-  function runtime() {
-    const a = api();
-    return a && a.runtime ? a.runtime : null;
+  function set(obj) {
+    return new Promise(function (resolve) {
+      try {
+        var p = chrome.storage.local.set(obj);
+        if (p && typeof p.then === "function") p.then(resolve, resolve);
+        else chrome.storage.local.set(obj, resolve);
+      } catch (_) { resolve(); }
+    });
   }
 
   function setStatus(text, ok) {
-    const el = document.getElementById("status");
+    var el = document.getElementById("status");
     if (!el) return;
     el.textContent = text;
     el.style.color = ok === false ? "#f87171" : "#4ade80";
   }
 
-  function getEnabled() {
-    return new Promise((resolve) => {
-      const s = storage();
-      if (!s) return resolve(true);
-      try {
-        const p = s.get(STORAGE_KEY);
-        if (p && typeof p.then === "function") {
-          p.then((d) => resolve(!d || d[STORAGE_KEY] !== false), () => resolve(true));
-        } else {
-          s.get(STORAGE_KEY, (d) => resolve(!d || d[STORAGE_KEY] !== false));
-        }
-      } catch (_) {
-        resolve(true);
-      }
-    });
-  }
+  document.addEventListener("DOMContentLoaded", function () {
+    var toggle = document.getElementById("toggle");
+    var width = document.getElementById("width");
+    var wval = document.getElementById("wval");
+    if (!toggle || !width) return;
 
-  function setEnabled(value) {
-    return new Promise((resolve) => {
-      const s = storage();
-      if (!s) return resolve();
-      try {
-        const p = s.set({ [STORAGE_KEY]: !!value });
-        if (p && typeof p.then === "function") p.then(resolve, resolve);
-        else resolve();
-      } catch (_) {
-        resolve();
-      }
-    });
-  }
-
-  function broadcastToggle(enabled) {
-    const t = tabs();
-    const r = runtime();
-    if (!t || !r) return Promise.resolve();
-
-    return new Promise((resolve) => {
-      try {
-        t.query({ active: true, currentWindow: true }, (tabsList) => {
-          if (!tabsList || !tabsList[0]) return resolve();
-          const tabId = tabsList[0].id;
-          try {
-            r.sendMessage(
-              tabId,
-              { type: "EBLC_TOGGLE", enabled: !!enabled },
-              { frameId: 0 },
-              () => void chrome.runtime.lastError
-            );
-          } catch (_) { /* ignore */ }
-          // also broadcast to all sub-frames
-          try {
-            r.sendMessage(
-              tabId,
-              { type: "EBLC_TOGGLE", enabled: !!enabled },
-              () => void chrome.runtime.lastError
-            );
-          } catch (_) { /* ignore */ }
-          resolve();
-        });
-      } catch (_) {
-        resolve();
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", async () => {
-    const toggle = document.getElementById("toggle");
-    if (!toggle) return;
-
-    const current = await getEnabled();
-    toggle.checked = current !== false;
-
-    toggle.addEventListener("change", async () => {
-      const enabled = !!toggle.checked;
-      setStatus(enabled ? "Attivato" : "Disattivato");
-      await setEnabled(enabled);
-      await broadcastToggle(enabled);
+    get([KEY_ENABLED, KEY_WIDTH]).then(function (data) {
+      toggle.checked = !data || data[KEY_ENABLED] !== false;
+      var w = (data && data[KEY_WIDTH]) || 360;
+      width.value = String(w);
+      if (wval) wval.textContent = w + "px";
+      setStatus(toggle.checked ? "Attivo" : "Disattivato");
     });
 
-    setStatus(toggle.checked ? "Attivo" : "Disattivato");
+    toggle.addEventListener("change", function () {
+      setStatus(toggle.checked ? "Attivato" : "Disattivato");
+      set({ eblc_enabled: !!toggle.checked });
+    });
+
+    width.addEventListener("input", function () {
+      var w = parseInt(width.value, 10);
+      if (!isFinite(w)) return;
+      if (wval) wval.textContent = w + "px";
+      set({ eblc_width: w });
+    });
   });
 })();
