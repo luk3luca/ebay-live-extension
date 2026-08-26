@@ -1,22 +1,23 @@
 /* ============================================================
    eBay Live Clean - pagina esterna (ebay.it/ebaylive/events/*)
    ------------------------------------------------------------
-   Obiettivi:
-     - via l'header evento e tutto cio' che sta sopra il player
-     - il player occupa tutta la finestra: altezza 100vh,
-       larghezza = altezza * 9/16 (video verticale, zero crop)
-     - colonna destra (about venditore / QR) nascosta
-     - niente scroll di pagina
+   Layout:
+     - header evento e header eBay nascosti (guadagnano spazio)
+     - riga del player a tutta viewport: info negozio (span 5,
+       come da griglia originale) | video | sidebar
+     - QR code nascosto: il suo spazio va al video + sidebar
+     - la sezione "Altri eventi" sotto resta al suo posto e la
+       pagina scorre normalmente per raggiungerla
    Selettori sui PREFISSI di classe (es. [class*="_playerRow_"]),
    mai sugli hash che eBay cambia a ogni deploy.
    ============================================================ */
 
+/* la pagina deve scorrere: gli eventi stanno sotto il player */
 html.eblc-on body {
-  /* niente scroll: tutto visibile in una schermata */
-  overflow: hidden !important;
+  overflow-x: hidden !important;
 }
 
-/* --- nasconde header globale eBay + header evento + banner --- */
+/* --- nascosti: header globale, header evento, banner, QR, footer --- */
 
 html.eblc-on #gh,
 html.eblc-on .ghw,
@@ -24,31 +25,32 @@ html.eblc-on #gh-gb,
 html.eblc-on #widgets-placeholder,
 html.eblc-on #glbfooter,
 html.eblc-on [class*="_fullHeightContainer_"] > header[class*="_root_"],
-html.eblc-on [class*="_header_"][class*="page-grid"] {
+html.eblc-on [class*="_header_"][class*="page-grid"],
+html.eblc-on [class*="_qrSection_"] {
   display: none !important;
 }
 
-/* --- contenitore full-height: diventa la "finestra" del player --- */
+/* --- contenitore full-height: flusso normale, senza fix --- */
 
 html.eblc-on [class*="_fullHeightContainer_"] {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 9999 !important;
-  background: #000 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  position: relative !important;
+  inset: auto !important;
+  z-index: auto !important;
+  width: 100% !important;
+  height: auto !important;
   min-height: 0 !important;
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow: hidden !important;
+  background: #000 !important;
+  overflow: visible !important;
 }
 
-/* --- riga del player: riempie la finestra --- */
+/* --- riga del player: tutta la viewport, gli eventi stanno sotto --- */
 
 html.eblc-on [class*="_playerRow_"] {
   width: 100% !important;
-  height: 100% !important;
+  height: 100vh !important;
   min-height: 0 !important;
   max-width: none !important;
   margin: 0 !important;
@@ -57,38 +59,32 @@ html.eblc-on [class*="_playerRow_"] {
 
 html.eblc-on [class*="_playerRow_"] > .page-grid,
 html.eblc-on [class*="_grid_1"] {
-  display: flex !important;
-  align-items: stretch !important;
-  justify-content: center !important;
   width: 100% !important;
   height: 100% !important;
   min-height: 0 !important;
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  gap: 0 !important;
+  align-items: stretch !important;
 }
 
-/* info venditore + QR code: fuori */
-html.eblc-on [class*="_aboutSection_"],
-html.eblc-on [class*="_qrSection_"] {
-  display: none !important;
-}
+/* info negozio: lasciamo le regole originali di eBay (span 5 della
+   griglia): nessuna regola qui. */
 
-/* --- slot del video: altezza piena, larghezza = video 9:16 + sidebar ---
-   La sidebar (chat/oggetti) vive DENTRO l'iframe del player: lo slot
-   esterno deve quindi contenere entrambe, altrimenti il video viene
-   schiacciato dalla colonna. */
+/* --- slot del video: assorbe le colonne del QR (6 -> fine griglia).
+   Larghezza = video 9:16 + sidebar (che vive DENTRO l'iframe). --- */
 
 html.eblc-on [class*="_shoplive_"],
 html.eblc-on #stream-parent {
+  grid-column: 6 / -1 !important;
+  justify-self: end !important;
   position: relative !important;
   inset: auto !important;
   height: 100vh !important;
   width: calc(100vh * 9 / 16 + var(--eblc-sidebar, 360px)) !important;
   min-height: 0 !important;
   min-width: 0 !important;
-  max-width: none !important;
+  max-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   background: #000 !important;

@@ -5,14 +5,16 @@ Estensione che ridisegna [eBay Live](https://www.ebay.it/ebaylive/) su desktop:
 - **Video a piena altezza** (100vh), larghezza proporzionale al 9:16 nativo
   dello stream (720×1280) → zero crop, zero letterbox.
 - **Chat + card oggetto/aste in una colonna laterale destra**
-  (larghezza regolabile dal popup, default 360px).
-- **Header eBay, info venditore, QR code, footer, marquee**: nascosti.
-- Niente scroll di pagina: tutto in una schermata.
+  (larghezza regolabile dal popup, default 360px): occupano lo spazio
+  che nell'originale aveva il QR code.
+- **Nascosti**: header eBay, header evento, QR code, footer, marquee.
+- **Info del negozio** (colonna sinistra) e **sezioni eventi** (sotto il
+  player) restano al loro posto: la pagina scorre normalmente.
 - Toggle ON/OFF istantaneo dal popup (badge ON sull'icona).
 
 ```
-chrome/    versione Chrome MV3 (quella funzionante, sviluppo attivo)
-firefox/   primo prototipo MV2 (riferimento storico per il porting)
+chrome/    versione Chrome MV3 (sviluppo attivo)
+firefox/   versione Firefox MV2 (min FF 121+, richiesto :has())
 ```
 
 ## Installazione (Chrome / Brave / Edge)
@@ -21,6 +23,19 @@ firefox/   primo prototipo MV2 (riferimento storico per il porting)
 2. Attiva **Modalità sviluppatore** (in alto a destra)
 3. **Carica estensione non pacchettizzata** → seleziona la cartella `chrome/`
 4. Apri una live: <https://www.ebay.it/ebaylive/>
+
+## Installazione (Firefox)
+
+1. Apri `about:debugging#/runtime/this-firefox`
+2. **Carica componente aggiuntivo temporaneo…** → seleziona
+   `firefox/manifest.json`
+3. Apri una live
+
+Nota: l'installazione temporanea svanisce al riavvio di Firefox;
+durante lo sviluppo premi **Ricarica** nella stessa pagina
+`about:debugging` dopo ogni modifica ai file. Per avere l'estensione
+fissa serve firmarla su AMO o usare Firefox Developer Edition /
+Nightly con `xpinstall.signatures.required = false`.
 
 ## Come funziona
 
@@ -68,5 +83,5 @@ chrome/
   content/player-frame.css iframe player (sidebar chat+oggetti)
   content/video-frame.css  iframe video (contain)
   popup/                   toggle + slider larghezza colonna
-firefox/                   prototipo MV2 (non installare, riferimento)
+firefox/                   versione MV2 per Firefox (min 121, temporanea via about:debugging)
 ```
