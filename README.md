@@ -28,7 +28,7 @@ Prebuilt packages are attached to each
 [GitHub release](../../releases):
 
 - `ebay-live-clean-chrome-<version>.zip` — Chrome / Edge / Brave
-- `ebay-live-clean-firefox-<version>.xpi` — Firefox
+- `ebay-live-clean-firefox-<version>.xpi` — Firefox (signed by Mozilla)
 
 #### Chrome / Edge / Brave
 
@@ -40,24 +40,18 @@ Prebuilt packages are attached to each
 
 The extension stays installed across browser restarts.
 
-#### Firefox — install from file
+#### Firefox
 
-1. Download the `.xpi` from the [latest release](../../releases/latest)
+1. Download the signed `.xpi` from the [latest release](../../releases/latest)
 2. Open `about:addons` → **Extensions**
 3. Open the **Tools for All Add-ons** menu (gear icon) →
    **Install Add-on From File…** → pick the downloaded `.xpi`
 4. Open a live event: <https://www.ebay.it/ebaylive/>
 
-> **Note:** Firefox requires extensions to be cryptographically signed.
-> "Install Add-on From File" with an unsigned `.xpi` works on
-> **Firefox Developer Edition, Nightly and ESR** out of the box
-> (ESR: set `xpinstall.signatures.required` to `false` in `about:config`).
-> On standard Firefox release builds, unsigned `.xpi` files can only be
-> loaded as **temporary add-ons** (`about:debugging#/runtime/this-firefox`
-> → *Load Temporary Add-on…*) and are removed when the browser restarts.
-> Permanent installs on any Firefox require signing the package on
-> [addons.mozilla.org](https://addons.mozilla.org/developers/addon/submit/) —
-> free and automated.
+The extension is signed on [addons.mozilla.org](https://addons.mozilla.org)
+(self-distribution), so it installs **permanently** on any Firefox —
+no Developer Edition or config tweaks needed, and it receives
+automatic updates.
 
 ### From source
 
