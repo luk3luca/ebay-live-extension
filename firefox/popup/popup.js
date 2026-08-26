@@ -49,11 +49,11 @@
       var w = (data && data[KEY_WIDTH]) || 360;
       width.value = String(w);
       if (wval) wval.textContent = w + "px";
-      setStatus(toggle.checked ? "Attivo" : "Disattivato");
+      setStatus(toggle.checked ? "Active" : "Disabled");
     });
 
     toggle.addEventListener("change", function () {
-      setStatus(toggle.checked ? "Attivato" : "Disattivato");
+      setStatus(toggle.checked ? "Enabled" : "Disabled");
       set({ eblc_enabled: !!toggle.checked });
     });
 
