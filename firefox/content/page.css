@@ -46,33 +46,22 @@ html.eblc-on [class*="_fullHeightContainer_"] {
   overflow: visible !important;
 }
 
-/* --- riga del player: tutta la viewport, gli eventi stanno sotto --- */
+/* --- riga del player: altezza viewport, MA stesse larghezze dell'
+   originale (la griglia e il suo max-width restano quelli di eBay,
+   altrimenti le colonne 1fr si ingrossano e l'info negozio si allarga) --- */
 
 html.eblc-on [class*="_playerRow_"] {
-  width: 100% !important;
   height: 100vh !important;
   min-height: 0 !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-html.eblc-on [class*="_playerRow_"] > .page-grid,
-html.eblc-on [class*="_grid_1"] {
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  align-items: stretch !important;
 }
 
 /* info negozio: lasciamo le regole originali di eBay (span 5 della
    griglia): nessuna regola qui. */
 
-/* --- slot del video: assorbe le colonne del QR (6 -> fine griglia).
-   Larghezza = video 9:16 + sidebar (che vive DENTRO l'iframe). --- */
+/* --- slot del video: si estende sulle colonne lasciate libere dal QR
+   nascosto (da colonna 6 alla fine della griglia, bordo destro come
+   prima). Larghezza interna = video 9:16 + sidebar (dentro l'iframe);
+   se lo spazio e' minore si adatta (max-width:100%). --- */
 
 html.eblc-on [class*="_shoplive_"],
 html.eblc-on #stream-parent {
