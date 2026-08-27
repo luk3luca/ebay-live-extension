@@ -4,7 +4,11 @@
       "updates": [
         {
           "version": "1.0.0",
-          "update_link": "https://github.com/luk3luca/ebay-live-extension/releases/download/v1.0.0/ebay-live-clean-firefox-1.0.0.xpi"
+          "update_link": "https://github.com/luk3luca/ebay-live-extension/releases/download/v1.0.0/ebay-live-clean-firefox-1.0.0-signed.xpi"
+        },
+        {
+          "version": "1.0.2",
+          "update_link": "https://github.com/luk3luca/ebay-live-extension/releases/download/v1.0.2/ebay-live-clean-firefox-1.0.2-signed.xpi"
         }
       ]
     }

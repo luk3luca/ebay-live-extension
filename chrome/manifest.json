@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "eBay Live Clean",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Maximizes the eBay Live video (vertical 9:16, no cropping) and moves chat + items to a side column. Headers and QR hidden; seller info and events stay in place.",
 
   "icons": {

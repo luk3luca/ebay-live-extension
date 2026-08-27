@@ -50,18 +50,19 @@ html.eblc-on [class*="_transparentOverlay_1amtf_"] {
 }
 
 /* --- footer (chat + item card): becomes the sidebar ---
-     Only the wrapper is fixed; the _playerFooter_ child fills it. */
+     Anchored between the video's right edge (frame-relative
+     100vh * 9/16, since the video is left-aligned in the frame)
+     and the right edge of the slot. Width is NOT set here: the
+     clamp (slider value, capped at the screen edge) is already
+     encoded in the slot width on the outer page. */
 
 html.eblc-on [class*="_footerWrapper_"] {
   position: fixed !important;
   top: 0 !important;
   bottom: auto !important;
-  left: auto !important;
+  left: calc(100vh * 9 / 16) !important;
   right: 0 !important;
-  width: min(
-    480px,
-    clamp(140px, var(--eblc-sidebar, 360px), calc(100% - 100vh * 9 / 16))
-  ) !important;
+  width: auto !important;
   height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -98,10 +99,11 @@ html.eblc-on .wrap-bottom-back-gradient {
 }
 
 /* player header (mute on the left, viewer count/buttons on the right):
-   its right anchor must stop where the video ends, otherwise the
-   buttons end up under the chat column */
+   its right anchor must stop where the video ends (video is
+   left-aligned in the frame: 100vh * 9/16), otherwise the buttons
+   end up under the chat column */
 html.eblc-on [class*="_root_1amtf_"] > header[class*="_streamHeader_"] {
-  right: calc(var(--eblc-sidebar, 360px) + 16px) !important;
+  right: calc(100vh * 9 / 16 + 16px) !important;
   left: 16px !important;
   width: auto !important;
 }

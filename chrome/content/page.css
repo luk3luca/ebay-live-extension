@@ -62,25 +62,45 @@ html.eblc-on [class*="_playerRow_"] > .page-grid {
   position: static !important;
 }
 
-/* seller info: keep eBay's original rules (span 5 of the grid):
-   no rule here on purpose. */
+/* seller info: centered in the space left of the (centered) video.
+   Space width = from the screen left edge to the video left edge. */
 
-/* --- video slot: right-anchored to the VIEWPORT (not the eBay grid),
-   so it can extend into the empty page margin on wide screens.
-   Width = 9:16 video + requested sidebar, capped at the right edge
-   of the seller info section so it never covers it.
-   Inside, the video keeps a FIXED width: when space runs out the
-   sidebar shrinks, never the video. --- */
+html.eblc-on [class*="_aboutSection_"] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  width: calc(50vw - 100vh * 9 / 32) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* let the inner card keep its natural width (it must center,
+   not stretch to the full left space) */
+html.eblc-on [class*="_aboutSection_"] > * {
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+/* --- video slot: the VIDEO is EXACTLY centered in the viewport
+   (slot left edge = video left edge = 50vw - 9/32 of viewport
+   height). The sidebar hangs off the video's right edge, so the
+   slot grows/shrinks to the RIGHT only; its width already encodes
+   the sidebar clamp: slider value, capped at the screen edge. --- */
 
 html.eblc-on [class*="_shoplive_"],
 html.eblc-on #stream-parent {
   position: absolute !important;
   top: 0 !important;
-  right: 0 !important;
+  left: calc(50vw - 100vh * 9 / 32) !important;
+  right: auto !important;
   height: 100vh !important;
-  width: min(
-    calc(100vh * 9 / 16 + var(--eblc-sidebar, 360px)),
-    calc(50vw + 249px)
+  width: calc(
+    100vh * 9 / 16 +
+    min(var(--eblc-sidebar, 360px), 50vw - 100vh * 9 / 32)
   ) !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -95,7 +115,7 @@ html.eblc-on [class*="_stream_1"] {
   padding: 0 !important;
 }
 
-/* iframe del player: riempie lo slot */
+/* player iframe: fills the slot */
 html.eblc-on iframe[src*="player.html"] {
   display: block !important;
   width: 100% !important;
